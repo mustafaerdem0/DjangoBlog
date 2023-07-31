@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+
+{% block site-icerigi %}
+
+
+
+{% for message in messages  %}
+<div class="alert alert-success text-center">
+{{message}}
+</div>
+{% endfor %}
+
+
+<div class=" d-flex justify-content-center w-100 pt-5">
+  <p>Son Gönderiler</p>
+</div>
+
+<!-- Modal  başlangıc-->
+
+{% if request.user.is_authenticated %}
+<div class="modalcontainer2">
+  <div class="modal-content2">
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
++
+</button>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Not Ekle</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form action="{% url 'notekle' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+      <div class="modal-body">
+        <div class="mb-3">
+          <label class="form-label">Not Başlığı</label>
+          <input type="text" name="notbaslik" class="form-control">
+          <div class="form-text">Notunuzun başlığı</div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Yazı İçeriğiniz</label>
+          <textarea  id="" name="noticerik" class="form-control"></textarea>
+          <div class="form-text">Yazı İçeriğiniz</div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Varsa Resminiz</label>
+          <input type="file" name="notresim" class="form-control">
+          <div class="form-text">Opsiyonel</div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Sosyal Medya Urlniz</label>
+          <input type="text" name="noturl" class="form-control">
+          <div class="form-text">Opsiyonel</div>
+        </div>
+      </div>
+   
+      <div class="modal-footer">
+        <button type="/" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Oluştur</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+{% endif %}
+
+<!-- Modal Bitiş -->
+    <div class=" justify-content-center w-100">
+    {% for note in Notes  %}
+    <div class="row justify-content-center  ">
+    <div class="col-6 border">
+      <div class="row">
+        <div class="col-12">
+          <div class="d-flex justify-content-between">
+          <p> <a href="{% url 'notedetails' note.id %}">Başlık: {{note.note_title}}</a> </p>
+          <p>Yazı: {{note.note_content}} </p>
+          <p>Tarih: {{note.note_createdat}}</p>
+          {% if request.user.id == note.noteauthor.id or request.user.is_superuser %}
+          <p class="text-danger"> <a href="{% url 'notsil' note.id %}" onclick="notsil(event,'{{note.id}}')"> Notu Sil</a></p>
+          <p class="text-warning"> <a href="{% url 'notedit' note.id %}">Not Güncelle</a></p>
+          {% endif %}
+        </div> 
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<script>
+  function notsil(event,notId){
+    event.preventDefault();
+    let onayla = window.confirm('eminmisinla');
+    if (onayla){
+      window.location= `/notlar/${notId}/sil`
+    }
+
+  }
+  setTimeout(() => {
+    let alert = document.querySelector('.alert')
+    if(alert){
+
+      alert.remove()
+    }
+  }, 3000);
+
+</script>
+
+{% endblock site-icerigi %}

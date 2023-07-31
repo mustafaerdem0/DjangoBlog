@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+
+{% block site-icerigi %}
+<div class=" d-flex justify-content-center w-100 pt-5">
+    <p>onaylanmamış postlar </p>
+  </div>  
+
+      <div class=" justify-content-center w-100">
+      {% for not in note  %}
+      <div class="row justify-content-center  ">
+      <div class="col-6 border">
+        <div class="row">
+          <div class="col-12">
+            <div class="d-flex justify-content-between">
+            <p> <a href="{% url 'notedetails' not.id %}">Başlık: {{not.note_title}}</a> </p>
+            <p>Yazı: {{not.note_content}} </p>
+            <p>Tarih: {{not.note_createdat}}</p>
+            {% if request.user.is_superuser %}
+            <p class="text-danger"> <a href="{% url 'notsil' not.id %}" onclick="notsil(event,'{{note.id}}')"> Notu Sil</a></p>
+            <p class="text-warning"> <a href="{% url 'notedit' not.id %}">Not Güncelle</a></p>
+            <p class="text-success"> <a href="{% url 'notonayla' not.id %}">Not Onayla</a></p>
+
+            {% endif %}
+          </div> 
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+{% empty %}
+<h1>onaylanmamış post yok</h1>
+    {% endfor %}
+  
+
+{% endblock site-icerigi %}

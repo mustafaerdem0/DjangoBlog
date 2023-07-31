@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block site-icerigi %}
+<div class="container">
+    <form id="form" action="{% url 'notedit' note.id %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form}}
+        <button type="submit">Güncelle</button>
+    </form>
+</div>
+
+
+
+
+
+<script>
+
+
+</script>
+{% endblock site-icerigi %}

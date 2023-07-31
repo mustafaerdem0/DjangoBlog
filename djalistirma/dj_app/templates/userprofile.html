@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+
+{% block site-icerigi %}
+
+  
+
+  <h1>{{user.username}}</h1>
+  {% if request.user.is_superuser %}
+    <a href="{% url 'userbanla' user.id %}">Kullanıcıyı Banla</a>
+    
+  {% endif %}
+  {% if banlıuser == True %}
+    <h1>bu   kulanıcı banlı</h1>
+  {% endif %}
+{% endblock site-icerigi %}

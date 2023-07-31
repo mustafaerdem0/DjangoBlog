@@ -1,0 +1,11 @@
+.modalcontainer2{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.modal-content2{
+    width: 50%;
+    display: flex;
+    justify-content: end;
+
+}

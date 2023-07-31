@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+
+
+{% block site-icerigi %}
+  <form action="{% url 'profileedit' user.id %}" method="post">
+    {% csrf_token %}
+    <div class="container">
+    {{formuser}}
+    <button class="btn btn-danger" type="submit">Değiştir</button>
+</div>
+  </form>
+
+
+{% endblock site-icerigi %}

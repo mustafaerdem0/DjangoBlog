@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+
+
+{% block site-icerigi %}
+
+{% if request.user.is_authenticated %}
+    {% if group in request.user.groups.all %} 
+        <h1>Premium Üyesin</h1>
+    {% else %}
+        <h1>Premium Üye Değilsiniz</h1>
+    {% endif %}
+{% endif %}  
+
+{% endblock site-icerigi %}

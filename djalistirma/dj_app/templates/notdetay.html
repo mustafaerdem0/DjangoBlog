@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block site-baslik %}
+{{note.note_title}}
+{% endblock site-baslik %}
+
+
+{% block site-icerigi %}
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div class="card mb-3">
+            <div class="row g-0">
+              <div class="col-md-4">
+                {% if note.note_image %}
+                <img src="{{note.note_image.url}}" class="img-fluid rounded-start" alt="...">
+                  {% else %}
+                {% endif %}
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h5 class="card-title">{{note.note_title}}</h5>
+                  <p class="card-text">{{note.note_content}}</p>
+                  <div class="d-flex justify-content-between ">
+                  <p class="card-text"><small class="text-body-secondary"> {{note.note_createdat}} </small> <a href="{% url 'userprofile' user.username user.id %}"><small>{{note.noteauthor}}</small></a></p>
+                  <!-- Modal Trigget butonum -->
+                  <button type="button" class="btn btn-warning"  data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Notu Güncelle
+                  </button>
+                </div>
+                </div>
+              </div>
+            </div>
+          </div>
+    </div>
+</div>
+
+
+
+
+<!-- Modal -->
+<form action="{% url 'notedetails' note.id %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          {{form}}
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-warning"> Notu Güncelle</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+{% endblock site-icerigi %}
